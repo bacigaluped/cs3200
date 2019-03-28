@@ -7,6 +7,7 @@ Install all the requirements so far:
 `pip install -r requirements.txt`
 
 Set the flask environmental variable to pantry_database.py:
+
 (on Windows)
 `set FLASK_APP=pantry_database.py`
 
