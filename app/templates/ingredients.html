@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
 
 <form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
     <input type="text" name="ingredients"/>
@@ -9,5 +9,88 @@
     <input type="text" name="ingredients"/>
     <input type="submit" value="Submit" />
 </form>
+
+
+<br />
+<br />
+
+<h2>Pantry Items</h2>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Item</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Eggs</td>
+        <td>
+            <form method="post" action="" enctype="">
+                <input type="submit" value="Remove Item from Pantry" />
+            </form>
+        </td>
+        <td>
+            <form method="post" action="" enctype="">
+                <input type="submit" value="Add to Shopping List" />
+            </form>
+        </td>
+      </tr>
+
+    </tbody>
+</table>
+
+<br />
+
+<a href="#" class="btn btn-default" role="button">Get Recipes</a>
+<br />
+
+<h2>Shopping List</h2>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Item</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Eggs</td>
+        <td>
+            <form method="post" action="" enctype="">
+                <input type="submit" value="Remove from List" />
+            </form>
+        </td>
+        <td>
+            <form method="post" action="" enctype="">
+                <input type="submit" value="Add to Pantry" />
+            </form>
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+<h2>Saved Recipes</h2>
+<table class="table table-hover">
+    <thead>
+      <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1234</td>
+        <td>Omelette</td>
+        <td>
+            <a href="#link_to_omelette_recipe">Link to Omelette Recipe</a>
+        </td>
+        <td>
+            <form method="post" action="" enctype="">
+                <input type="submit" value="Remove Recipe" />
+            </form>
+        </td>
+      </tr>
+    </tbody>
+</table>
 
 {% endblock %}
