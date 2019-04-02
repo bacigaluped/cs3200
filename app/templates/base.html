@@ -1,13 +1,13 @@
-<html>
-    <head>
-      {% if title %}
-      <title>{{ title }}</title>
-      {% else %}
-      <title>Pantry App</title>
-      {% endif %}
-    </head>
-    <body>
-        <hr>
-        {% block content %}{% endblock %}
-    </body>
-</html>
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+    Pantry App
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
