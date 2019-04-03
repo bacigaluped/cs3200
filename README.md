@@ -2,6 +2,11 @@ To run this, make sure you create a python virtual environment:
 
 `python -m venv venv`
 
+Activate the environment:
+
+(On Windows)
+`venv\Scripts\activate`
+
 Install all the requirements so far:
 
 `pip install -r requirements.txt`
