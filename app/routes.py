@@ -3,7 +3,7 @@ from requests import get
 from flask import render_template, redirect, url_for
 from webargs import fields
 from webargs.flaskparser import use_kwargs
-from json import dumps, encoder
+
 
 api_headers={
     "X-RapidAPI-Key": "d79033f905mshb7d8af7cc775ed9p15d83ejsn0f48d10e2155"
@@ -16,7 +16,7 @@ def index():
         'ingredients.html',
         pantry_items=['Eggs'],
         shopping_list=['Eggs'],
-        recipes=[{'id': 1234, 'title': 'Omelette', 'Link': '#link_to_omelette_recipe'}],
+        recipes=[{'id': 1234, 'title': 'Omelette', 'link': '#link_to_omelette_recipe'}],
     )
 
 
