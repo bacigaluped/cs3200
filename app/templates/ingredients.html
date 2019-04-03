@@ -22,20 +22,33 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Eggs</td>
-        <td>
-            <form method="post" action="" enctype="">
-                <input type="submit" value="Remove Item from Pantry" />
+        {% for ingredient in pantry_items %}
+        <tr>
+            <td>{{ingredient}}</td>
+            <td>
+                <form method="post" action="{{url_for('remove_from_pantry')}}" enctype="multipart/form-data">
+                    <input type="hidden" value="{{ingredient}}" name="ingredient" />
+                    <input type="submit" value="Remove Item from Pantry" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="{{url_for('add_to_shopping_list')}}" enctype="multipart/form-data">
+                    <input type="hidden" name="ingredient" value="{{ingredient}}"/>
+                    <input type="submit" value="Add to Shopping List" />
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <form method="post" action="{{url_for('add_to_pantry')}}" enctype="multipart/form-data">
+                <td>
+                    <input type="text" name="ingredient" />
+                </td>
+                <td>
+                    <input type="submit" value="Add to Pantry" />
+                </td>
             </form>
-        </td>
-        <td>
-            <form method="post" action="" enctype="">
-                <input type="submit" value="Add to Shopping List" />
-            </form>
-        </td>
-      </tr>
-
+        </tr>
     </tbody>
 </table>
 
@@ -52,19 +65,33 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Eggs</td>
-        <td>
-            <form method="post" action="" enctype="">
-                <input type="submit" value="Remove from List" />
+        {% for item in shopping_list %}
+        <tr>
+            <td>{{item}}</td>
+            <td>
+                <form method="post" action="{{url_for('remove_from_shopping_list')}}" enctype="multipart/form-data">
+                    <input type="hidden" value="{{item}}" name="list_item" />
+                    <input type="submit" value="Remove from List" />
+                </form>
+            </td>
+            <td>
+                <form method="post" action="{{url_for('add_to_pantry')}}" enctype="">
+                    <input type="hidden" value="{{item}}" name="ingredient" />
+                    <input type="submit" value="Add to Pantry" />
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <form method="post" action="{{ url_for('add_to_shopping_list') }}" enctype="multipart/form-data">
+                <td>
+                    <input type="text" name="ingredient" />
+                </td>
+                <td>
+                    <input type="submit" value="Add ingredient" />
+                </td>
             </form>
-        </td>
-        <td>
-            <form method="post" action="" enctype="">
-                <input type="submit" value="Add to Pantry" />
-            </form>
-        </td>
-      </tr>
+        </tr>
     </tbody>
 </table>
 
@@ -78,18 +105,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1234</td>
-        <td>Omelette</td>
-        <td>
-            <a href="#link_to_omelette_recipe">Link to Omelette Recipe</a>
-        </td>
-        <td>
-            <form method="post" action="" enctype="">
-                <input type="submit" value="Remove Recipe" />
-            </form>
-        </td>
-      </tr>
+        {% for recipe in recipes %}
+        <tr>
+            <td>{{recipe['id']}}</td>
+            <td>{{recipe['title']}}</td>
+            <td>
+                <a href="{{recipe['link']}}">Recipe Link</a>
+            </td>
+            <td>
+                <form method="post" action="" enctype="">
+                    <input type="submit" value="Remove Recipe" />
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 
