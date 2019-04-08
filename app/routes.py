@@ -1,4 +1,4 @@
-from app import app
+from app import app, database_password, api_key
 from requests import get
 from flask import render_template, redirect, url_for
 from webargs import fields
@@ -6,7 +6,7 @@ from webargs.flaskparser import use_kwargs
 
 
 api_headers={
-    "X-RapidAPI-Key": "d79033f905mshb7d8af7cc775ed9p15d83ejsn0f48d10e2155"
+    "X-RapidAPI-Key": api_key
 }
 
 @app.route('/')
