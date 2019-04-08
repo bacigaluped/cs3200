@@ -43,6 +43,7 @@
             <form method="post" action="{{url_for('add_to_pantry')}}" enctype="multipart/form-data">
                 <td>
                     <input type="text" name="ingredient" />
+                    <input type="hidden" name="ingredient_id" value="-1" />
                 </td>
                 <td>
                     <input type="submit" value="Add to Pantry" />
@@ -67,16 +68,17 @@
     <tbody>
         {% for item in shopping_list %}
         <tr>
-            <td>{{item}}</td>
+            <td>{{item['food_item']}}</td>
             <td>
                 <form method="post" action="{{url_for('remove_from_shopping_list')}}" enctype="multipart/form-data">
-                    <input type="hidden" value="{{item}}" name="list_item" />
+                    <input type="hidden" value="{{item['food_item_id']}}" name="list_item_id" />
                     <input type="submit" value="Remove from List" />
                 </form>
             </td>
             <td>
                 <form method="post" action="{{url_for('add_to_pantry')}}" enctype="">
-                    <input type="hidden" value="{{item}}" name="ingredient" />
+                    <input type="hidden" value="{{item['food_item']}}" name="ingredient" />
+                    <input type="hidden" value="{{item['food_item_id']}}" name="ingredient_id" />
                     <input type="submit" value="Add to Pantry" />
                 </form>
             </td>
