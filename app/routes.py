@@ -38,7 +38,7 @@ user_id = 1
 def index():
 
     cursor.execute(
-        f'''select food_item.food_item_id, food_item
+        f'''select food_item.food_item_id, food_item, photo_url
         from pantry_has_food_item
         join food_item on pantry_has_food_item.food_item_id=food_item.food_item_id
         where pantry_has_food_item.pantry_id={pantry_id};'''
@@ -49,12 +49,13 @@ def index():
         pantry_items.append(
             {
                 'food_item_id': row[0],
-                'food_item': row[1]
+                'food_item': row[1],
+                'photo_url': row[2]
             }
         )
 
     cursor.execute(
-        f'''select food_item.food_item_id, food_item, cost
+        f'''select food_item.food_item_id, food_item, cost, photo_url
         from user_shops_for_food_item
         join food_item on food_item.food_item_id=user_shops_for_food_item.food_item_id
         where user_id={user_id};'''
@@ -66,7 +67,8 @@ def index():
             {
                 'food_item_id': row[0],
                 'food_item': row[1],
-                'cost': row[2]
+                'cost': row[2],
+                'photo_url': row[3]
             }
         )
 
