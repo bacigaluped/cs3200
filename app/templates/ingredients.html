@@ -1,17 +1,6 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-
-<form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
-    <input type="text" name="ingredients"/>
-    <input type="text" name="ingredients"/>
-    <input type="text" name="ingredients"/>
-    <input type="text" name="ingredients"/>
-    <input type="submit" value="Submit" />
-</form>
-
-
-<br />
 <br />
 
 <h2>Pantry Items</h2>
@@ -60,7 +49,46 @@
 
 <br />
 
-<a href="#" class="btn btn-default" role="button">Get Recipes</a>
+
+<form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
+    {% for ingredient in pantry_items %}
+        <input type="hidden" value="{{ingredient['food_item']}}" name="ingredients"/>
+    {% endfor %}
+    <input type="submit" class="btn btn-default" value="Get Recipes"/>
+</form>
+
+<br />
+{% if possible_recipes|length > 0 %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in possible_recipes %}
+            <tr>
+                <td>
+                    <img src="{{recipe['photo_link']}}" alt="" style="width:50px" />
+                </td>
+                <td>{{recipe['id']}}</td>
+                <td>
+                    <a href="{{recipe['link']}}" target="_blank">{{recipe['title']}}</a>
+                </td>
+                <td>
+                    <form method="post" action="{{url_for('save_recipe')}}">
+                        <input type="hidden" value="{{recipe['id']}}" name="recipe_id" />
+                        <input type="submit" value="Save Recipe" />
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endif %}
 <br />
 
 <h2>Shopping List</h2>
@@ -111,21 +139,24 @@
 <table class="table table-hover">
     <thead>
       <tr>
+          <th></th>
           <th>ID</th>
-          <th>Name</th>
-          <th>Link</th>
+          <th>Title</th>
       </tr>
     </thead>
     <tbody>
         {% for recipe in recipes %}
         <tr>
-            <td>{{recipe['id']}}</td>
-            <td>{{recipe['title']}}</td>
             <td>
-                <a href="{{recipe['link']}}">Recipe Link</a>
+                <img src="{{recipe['photo_link']}}" alt="" style="width:50px" />
+            </td>
+            <td>{{recipe['id']}}</td>
+            <td>
+                <a href="{{recipe['link']}}" target="_blank">{{recipe['title']}}</a>
             </td>
             <td>
-                <form method="post" action="" enctype="">
+                <form method="post" action="{{url_for('remove_recipe_from_saved')}}" enctype="">
+                    <input type="hidden" value="{{recipe['id']}}" name="recipe_id" />
                     <input type="submit" value="Remove Recipe" />
                 </form>
             </td>
