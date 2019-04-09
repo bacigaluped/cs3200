@@ -25,8 +25,8 @@ CREATE TABLE user (
 -- RECIPE
 DROP TABLE IF EXISTS recipe;
 CREATE TABLE recipe (
-	recipe_id int PRIMARY KEY AUTO_INCREMENT,
-    title varchar(60) NOT NULL,
+	recipe_id int PRIMARY KEY,
+    title varchar(128) NOT NULL,
     recipe_url varchar(255) NOT NULL,
     photo_url varchar(255) NOT NULL);
 
