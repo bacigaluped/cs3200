@@ -38,7 +38,7 @@ user_id = 1
 def index():
 
     cursor.execute(
-        f'''select food_item
+        f'''select food_item.food_item_id, food_item
         from pantry_has_food_item
         join food_item on pantry_has_food_item.food_item_id=food_item.food_item_id
         where pantry_has_food_item.pantry_id={pantry_id};'''
@@ -46,7 +46,12 @@ def index():
 
     pantry_items = list()
     for row in cursor:
-        pantry_items.append(row[0])
+        pantry_items.append(
+            {
+                'food_item_id': row[0],
+                'food_item': row[1]
+            }
+        )
 
     cursor.execute(
         f'''select food_item.food_item_id, food_item, cost
@@ -57,8 +62,6 @@ def index():
     shopping_list = list()
 
     for row in cursor:
-
-        # TODO add cost and other attributes maybe
         shopping_list.append(
             {
                 'food_item_id': row[0],
@@ -98,7 +101,38 @@ def index():
 @app.route('/add_to_shopping_list', methods=['POST'])
 @use_kwargs({'ingredient': fields.Str(), 'ingredient_id': fields.Int()})
 def add_to_shopping_list(ingredient, ingredient_id):
-    print(f'{ingredient} needs to be added to the shopping list')
+    # print(f'{ingredient} needs to be added to the shopping list')
+
+    while ingredient_id < 0:
+        cursor.execute(f'''select food_item_id from food_item where food_item="{ingredient}";''')
+
+        existing_ingredient_list = list(cursor)
+
+        if not existing_ingredient_list:
+            photo_url = get_food_image(ingredient)
+            if photo_url:
+                cursor.execute(f'''insert into food_item (food_item, photo_url) values ("{ingredient}", "{photo_url}");''')
+            else:
+                cursor.execute(f'''insert into food_item (food_item) values ("{ingredient}");''')
+
+            cnx.commit()
+
+        else:
+            for row in existing_ingredient_list:
+                ingredient_id = row[0]
+
+    cursor.execute(
+        f'''select * from user_shops_for_food_item where user_id={user_id} and food_item_id={ingredient_id};'''
+    )
+
+    if not list(cursor):
+        cursor.execute(
+            f'''insert into user_shops_for_food_item (user_id, food_item_id) values ({user_id}, {ingredient_id});'''
+        )
+
+        cnx.commit()
+
+    return redirect(url_for('index'))
 
     return redirect(url_for('index'))
 
@@ -121,8 +155,6 @@ def add_to_pantry(ingredient, ingredient_id):
 
             cnx.commit()
 
-            from IPython import embed
-            embed()
         else:
             for row in existing_ingredient_list:
                 ingredient_id = row[0]
@@ -148,13 +180,21 @@ def remove_from_shopping_list(list_item_id):
     cursor.execute(
         f'''delete from user_shops_for_food_item where user_id={user_id} and food_item_id={list_item_id};'''
     )
+
+    cnx.commit()
     return redirect(url_for('index'))
 
 
 @app.route('/remove_from_pantry', methods=['POST'])
-@use_kwargs({'ingredient': fields.Str()})
-def remove_from_pantry(ingredient):
-    print(f'{ingredient} would be removed from the pantry here')
+@use_kwargs({'ingredient_id': fields.Int()})
+def remove_from_pantry(ingredient_id):
+    # print(f'{ingredient} would be removed from the pantry here')
+
+    cursor.execute(
+        f'''delete from pantry_has_food_item where pantry_id={pantry_id} and food_item_id={ingredient_id};'''
+    )
+
+    cnx.commit()
     return redirect(url_for('index'))
 
 
