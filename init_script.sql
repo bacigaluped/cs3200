@@ -14,7 +14,7 @@ CREATE TABLE pantry (
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
 	user_id int PRIMARY KEY AUTO_INCREMENT,
-	username varchar(16) NOT NULL,
+	username varchar(16) UNIQUE NOT NULL,
     email varchar(255) NULL,
     password varchar(32) NOT NULL,
     pantry_id int NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE recipe (
 	recipe_id int PRIMARY KEY,
     title varchar(128) NOT NULL,
     recipe_url varchar(255) NOT NULL,
-    photo_url varchar(255) NOT NULL);
+    photo_url varchar(255) UNIQUE NOT NULL);
 
 
 -- USER_SAVED_RECIPE
@@ -83,7 +83,7 @@ CREATE TABLE user_shops_for_food_item (
 DROP TABLE IF EXISTS dietary_restriction;
 CREATE TABLE dietary_restriction (
 	dietary_restriction_id int PRIMARY KEY AUTO_INCREMENT,
-    restriction varchar(45) NOT NULL);
+    restriction varchar(45) UNIQUE NOT NULL);
 
 
 
