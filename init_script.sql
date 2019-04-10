@@ -44,7 +44,7 @@ CREATE TABLE user_saved_recipe (
 DROP TABLE IF EXISTS food_item;
 CREATE TABLE food_item (
 	food_item_id int PRIMARY KEY AUTO_INCREMENT,
-    food_item varchar(45) NOT NULL,
+    food_item varchar(45) NOT NULL UNIQUE,
     photo_url varchar(255),
     cost varchar(20) DEFAULT NULL);
 
