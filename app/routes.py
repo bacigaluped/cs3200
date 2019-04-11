@@ -6,7 +6,10 @@ from webargs.flaskparser import use_kwargs
 from mysql import connector
 
 cnx = connector.connect(
-    user='root', password=database_password, host='localhost', database='meal_planner'
+    user='bacigaluped',
+    password=database_password,
+    host='pantrydatabase.c48pkswgq7ay.us-east-1.rds.amazonaws.com',
+    database='pantry_database'
 )
 cursor = cnx.cursor()
 

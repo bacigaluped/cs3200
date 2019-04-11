@@ -1,4 +1,4 @@
-use meal_planner;
+use pantry_database;
 
 select food_item
 from pantry_has_food_item
