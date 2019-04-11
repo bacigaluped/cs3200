@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS meal_planner;
-CREATE DATABASE meal_planner;
-USE meal_planner;
+DROP DATABASE IF EXISTS pantry_database;
+CREATE DATABASE pantry_database;
+USE pantry_database;
 
 
 -- PANTRY
