@@ -49,13 +49,26 @@
 
 <br />
 
-
-<form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
-    {% for ingredient in pantry_items %}
-        <input type="hidden" value="{{ingredient['food_item']}}" name="ingredients"/>
-    {% endfor %}
-    <input type="submit" class="btn btn-default" value="Get Recipes"/>
-</form>
+<div class="row">
+    <div class="col-xs-4">
+        <form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
+            {% for ingredient in pantry_items %}
+                <input type="hidden" value="{{ingredient['food_item']}}" name="ingredients"/>
+            {% endfor %}
+            <input type="hidden" value=1 name="ranking" />
+            <input type="submit" class="btn btn-default" value="Get Recipes Minimizing Missing Ingredients"/>
+        </form>
+    </div>
+    <div class="col-xs-4">
+        <form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
+            {% for ingredient in pantry_items %}
+                <input type="hidden" value="{{ingredient['food_item']}}" name="ingredients"/>
+            {% endfor %}
+            <input type="hidden" value=2 name="ranking" />
+            <input type="submit" class="btn btn-default" value="Get Recipes Maximizing Existing Ingredients"/>
+        </form>
+    </div>
+</div>
 
 <br />
 {% if possible_recipes|length > 0 %}
@@ -135,7 +148,7 @@
     </tbody>
 </table>
 
-<a href="{{url_for('make_printable_shopping_list')}}" class="btn btn-default" target="_blank">Export and Print Shopping List</a> 
+<a href="{{url_for('make_printable_shopping_list')}}" class="btn btn-default" target="_blank">Export and Print Shopping List</a>
 
 <h2>Saved Recipes</h2>
 <table class="table table-hover">

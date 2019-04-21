@@ -276,11 +276,12 @@ def save_recipes_in_database(recipe_list):
 
 
 @app.route('/call_api', methods=['POST'])
-@use_kwargs({'ingredients': fields.List(fields.Str())})
-def call_api(ingredients):
+@use_kwargs({'ingredients': fields.List(fields.Str()), 'ranking': fields.Int()})
+def call_api(ingredients, ranking):
+
     response = get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients",
         headers=api_headers,
-        params={'ingredients': ingredients, 'number': 5, 'ranking': 1}
+        params={'ingredients': ','.join(ingredients), 'number': 5, 'ranking': ranking}
     )
 
     possible_recipe_list = save_recipes_in_database(response.json())
