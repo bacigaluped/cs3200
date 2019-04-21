@@ -101,8 +101,30 @@ def index(possible_recipe_list=list()):
         shopping_list=shopping_list,
         recipes=recipes,
         possible_recipes=possible_recipe_list
-        # recipes=[{'id': 1234, 'title': 'Omelette', 'link': '#link_to_omelette_recipe'}]
     )
+
+
+@app.route('/make_printable_shopping_list', methods=['GET'])
+def make_printable_shopping_list():
+    cursor.execute(
+        f'''select food_item.food_item_id, food_item, cost, photo_url
+        from user_shops_for_food_item
+        join food_item on food_item.food_item_id=user_shops_for_food_item.food_item_id
+        where user_id={user_id};'''
+    )
+    shopping_list = list()
+
+    for row in cursor:
+        shopping_list.append(
+            {
+                'food_item_id': row[0],
+                'food_item': row[1],
+                'cost': row[2],
+                'photo_url': row[3]
+            }
+        )
+
+    return render_template('shopping_list.html', shopping_list=shopping_list)
 
 
 @app.route('/add_to_shopping_list', methods=['POST'])
@@ -138,8 +160,6 @@ def add_to_shopping_list(ingredient, ingredient_id):
         )
 
         cnx.commit()
-
-    return redirect(url_for('index'))
 
     return redirect(url_for('index'))
 

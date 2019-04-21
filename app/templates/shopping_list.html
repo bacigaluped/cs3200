@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<h2>Shopping List</h2>
+
+<table class="table">
+    <th>
+        Item
+    </th>
+    <tbody>
+        {% for item in shopping_list %}
+            <tr>
+                <td>{{item['food_item']}}</td>
+                <td><input type="checkbox"></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<button onclick="window.print()" class="btn btn-default">Print this page</button>
+
+
+{% endblock %}
