@@ -37,9 +37,7 @@ def get_food_image(food_item):
 pantry_id = 1
 user_id = 1
 
-@app.route('/')
-@app.route('/index')
-def index(possible_recipe_list=list()):
+def get_pantry_items():
 
     cursor.execute(
         f'''select food_item.food_item_id, food_item, photo_url
@@ -58,6 +56,10 @@ def index(possible_recipe_list=list()):
             }
         )
 
+    return pantry_items
+
+def get_shopping_list():
+
     cursor.execute(
         f'''select food_item.food_item_id, food_item, cost, photo_url
         from user_shops_for_food_item
@@ -75,6 +77,11 @@ def index(possible_recipe_list=list()):
                 'photo_url': row[3]
             }
         )
+
+    return shopping_list
+
+
+def get_recipe_list():
 
     cursor.execute(
         f'''select recipe.recipe_id, title, recipe_url, photo_url
@@ -94,37 +101,23 @@ def index(possible_recipe_list=list()):
             }
         )
 
+    return recipes
+
+@app.route('/')
+def index(possible_recipe_list=list()):
 
     return render_template(
         'ingredients.html',
-        pantry_items=pantry_items,
-        shopping_list=shopping_list,
-        recipes=recipes,
+        pantry_items=get_pantry_items(),
+        shopping_list=get_shopping_list(),
+        recipes=get_recipe_list(),
         possible_recipes=possible_recipe_list
     )
 
 
 @app.route('/make_printable_shopping_list', methods=['GET'])
 def make_printable_shopping_list():
-    cursor.execute(
-        f'''select food_item.food_item_id, food_item, cost, photo_url
-        from user_shops_for_food_item
-        join food_item on food_item.food_item_id=user_shops_for_food_item.food_item_id
-        where user_id={user_id};'''
-    )
-    shopping_list = list()
-
-    for row in cursor:
-        shopping_list.append(
-            {
-                'food_item_id': row[0],
-                'food_item': row[1],
-                'cost': row[2],
-                'photo_url': row[3]
-            }
-        )
-
-    return render_template('shopping_list.html', shopping_list=shopping_list)
+    return render_template('shopping_list.html', shopping_list=get_shopping_list())
 
 
 @app.route('/add_to_shopping_list', methods=['POST'])
