@@ -1,4 +1,4 @@
-from app import app, database_password, api_key
+from app import app, database_password, api_key, aws_user_name
 from requests import get
 from flask import render_template, redirect, url_for
 from webargs import fields
@@ -6,7 +6,7 @@ from webargs.flaskparser import use_kwargs
 from mysql import connector
 
 cnx = connector.connect(
-    user='bacigaluped',
+    user=aws_user_name,
     password=database_password,
     host='pantrydatabase.c48pkswgq7ay.us-east-1.rds.amazonaws.com',
     database='pantry_database'
