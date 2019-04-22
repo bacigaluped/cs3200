@@ -50,24 +50,21 @@
 <br />
 
 <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-8">
         <form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
             {% for ingredient in pantry_items %}
                 <input type="hidden" value="{{ingredient['food_item']}}" name="ingredients"/>
             {% endfor %}
-            <input type="hidden" value=1 name="ranking" />
-            <input type="submit" class="btn btn-default" value="Get Recipes Minimizing Missing Ingredients"/>
+            <input type="submit" class="btn btn-default" value="Get Recipes"/>
+            <label class="radio-inline">
+                <input type="radio" value=1 name="ranking" required>Minimize Missing Ingredients </input>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" value=2 name="ranking" required>Maximize Existing Ingredients</input>
+            </label>
         </form>
     </div>
-    <div class="col-xs-4">
-        <form method="post" action="{{url_for('call_api')}}" enctype="multipart/form-data" >
-            {% for ingredient in pantry_items %}
-                <input type="hidden" value="{{ingredient['food_item']}}" name="ingredients"/>
-            {% endfor %}
-            <input type="hidden" value=2 name="ranking" />
-            <input type="submit" class="btn btn-default" value="Get Recipes Maximizing Existing Ingredients"/>
-        </form>
-    </div>
+
 </div>
 
 <br />
